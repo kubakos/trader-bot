@@ -9,3 +9,4 @@ execute = ExecutionModel()
 broker = Oanda()
 
 broker.set_leverage(.9)
+broker.open_positions()

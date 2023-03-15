@@ -1,4 +1,4 @@
-from portfolio import PortfolioConstructionModel
+from modules.portfolio import PortfolioConstructionModel
 
 
 class ExecutionModel(object):

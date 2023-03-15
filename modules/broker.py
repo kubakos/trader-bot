@@ -1,4 +1,4 @@
-import settings
+import modules.settings
 import requests
 import datetime
 
@@ -6,11 +6,19 @@ import datetime
 class Oanda(object):
 
     def __init__(self):
-        self.base_url = settings.oanda_api_url
-        self.id = settings.oanda_account_id
-        self.token = settings.my_oanda_token
+        self.base_url = modules.settings.oanda_api_url
+        self.id = modules.settings.oanda_account_id
+        self.token = modules.settings.my_oanda_token
         self.client = requests.Session()
         self.client.headers['Authorization'] = 'Bearer ' + self.token
+
+    def summary(self):
+        response = self.client.get(
+            self.base_url + '/v3/accounts/' + self.id + '/summary')
+        if response.status_code == 200:
+            return response.json()['account']
+        else:
+            print("Couldn't get account summary!")
 
     def universe(self):
         universe = []

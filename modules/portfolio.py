@@ -1,7 +1,7 @@
-from broker import Oanda
-from alpha import AlphaModel
-from risk import RiskModel
-from cost import TransactionCostModel
+from modules.broker import Oanda
+from modules.alpha import AlphaModel
+from modules.risk import RiskModel
+from modules.cost import TransactionCostModel
 
 
 class PortfolioConstructionModel(object):
