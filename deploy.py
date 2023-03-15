@@ -9,4 +9,5 @@ execute = ExecutionModel()
 broker = Oanda()
 
 broker.set_leverage(.9)
-broker.open_positions()
+print('Balance:', broker.summary()['balance'], 'EUR')
+print('Profit & Loss:', broker.summary()['pl'], 'EUR')
