@@ -1,4 +1,5 @@
 # trader-bot
 
 to-do:
-  - unit tests
+  - testing
+    https://realpython.com/python-testing/

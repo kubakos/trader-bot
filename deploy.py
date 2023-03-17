@@ -3,11 +3,6 @@ from modules.execution import ExecutionModel
 from modules.broker import Oanda
 
 
+broker = Oanda()
 portfolio = PortfolioConstructionModel()
 execute = ExecutionModel()
-
-broker = Oanda()
-
-broker.set_leverage(.9)
-print('Balance:', broker.summary()['balance'], 'EUR')
-print('Profit & Loss:', broker.summary()['pl'], 'EUR')
