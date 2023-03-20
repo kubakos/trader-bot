@@ -1,24 +1,27 @@
-import modules.settings
+import blackbox.oauth
 import requests
 import datetime
 
 
-class Oanda(object):
+class InteractiveBrokers():
 
     def __init__(self):
-        self.base_url = modules.settings.oanda_api_url
-        self.id = modules.settings.oanda_account_id
-        self.token = modules.settings.my_oanda_token
+        pass
+
+
+class Oanda():
+
+    def __init__(self):
+        self.base_url = blackbox.oauth.oanda_api_url
+        self.id = blackbox.oauth.oanda_account_id
+        self.token = blackbox.oauth.my_oanda_token
         self.client = requests.Session()
         self.client.headers['Authorization'] = 'Bearer ' + self.token
 
-    def summary(self):
+    def account_summary(self):
         response = self.client.get(
             self.base_url + '/v3/accounts/' + self.id + '/summary')
-        if response.status_code == 200:
-            return response.json()['account']
-        else:
-            print("Couldn't get account summary!")
+        return response.status_code, response.json()['account']
 
     def universe(self):
         universe = []
@@ -26,10 +29,7 @@ class Oanda(object):
             self.base_url + '/v3/accounts/' + self.id + '/instruments')
         for i in response.json()['instruments']:
             universe.append(i['name'])
-        if response.status_code == 200:
-            return universe
-        else:
-            print("Couldn't get list of tradable instruments!")
+        return response.status_code, universe
 
     def owned_instruments(self):
         instruments = []
@@ -37,18 +37,12 @@ class Oanda(object):
             self.base_url + '/v3/accounts/' + self.id)
         for i in account_info.json()['account']['positions']:
             instruments.append(i['instrument'])
-        if account_info.status_code == 200:
-            return instruments
-        else:
-            print("Couldn't get list of owned instruments!")
+        return account_info.status_code, instruments
 
     def open_positions(self):
         account_info = self.client.get(
             self.base_url + '/v3/accounts/' + self.id)
-        if account_info.status_code == 200:
-            return account_info.json()['account']['positions']
-        else:
-            print("Couldn't get list of open positions!")
+        return account_info.status_code, account_info.json()['account']['positions']
 
     def open_order(self, direction, unit, instrument, type_of_order='MARKET'):
         if unit > 0:
@@ -64,6 +58,7 @@ class Oanda(object):
             else:
                 print('Open order FAILED at', datetime.datetime.now(),
                       'with error message:', response.json()['errorMessage'] + '!')
+            return response.status_code
         else:
             raise ValueError('Open order unit has to be a positive number!')
 
@@ -107,3 +102,6 @@ class Oanda(object):
                       response.json()['errorMessage'])
         else:
             raise ValueError('Leverage has to be between 0 and 1!')
+
+    def close(self):
+        self.client.close()

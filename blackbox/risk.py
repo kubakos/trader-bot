@@ -1,4 +1,4 @@
-from modules.broker import Oanda
+from blackbox.broker import Oanda
 
 
 class RiskModel(object):

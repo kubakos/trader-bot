@@ -1,4 +1,4 @@
-from modules.portfolio import PortfolioConstructionModel
+from blackbox.portfolio import PortfolioConstructionModel
 
 
 class ExecutionModel(object):
