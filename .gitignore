@@ -1,4 +1,4 @@
-modules/oauth.py
+blackbox/oauth.py
 
 
 # Byte-compiled / optimized / DLL files
